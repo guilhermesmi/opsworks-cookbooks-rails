@@ -24,18 +24,18 @@ node[:deploy].each do |application, deploy|
   end
 
   #creating file for bug of /root/.ruby-uuid not created
-  template "/tmp/ruby-uuid" do
-      content ""
-      group 'root'
-      owner "#{deploy[:user]}"
-      mode   "0666"
+  file "/tmp/ruby-uuid" do
+    group 'root'
+    owner "#{deploy[:user]}"
+    mode   "0666"
+    action :create_if_missing
   end
 
-  template "/tmp/.ruby-uuid" do
-      content ""
-      group 'root'
-      owner "#{deploy[:user]}"
-      mode   "0666"
+  file "/tmp/.ruby-uuid" do
+    group 'root'
+    owner "#{deploy[:user]}"
+    mode   "0666"
+    action :create_if_missing
   end
 
   execute "sudo chown -R #{deploy[:user]} #{deploy[:deploy_to]}/shared" do
