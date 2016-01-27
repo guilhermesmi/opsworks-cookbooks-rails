@@ -3,12 +3,6 @@ include_recipe "deploy"
 node[:deploy].each do |application, deploy|
   deploy = node[:deploy][application]
 
-  execute "restart Rails app #{application}" do
-    cwd deploy[:current_path]
-    command node[:opsworks][:rails_stack][:restart_command]
-    action :nothing
-  end
-
   node.default[:deploy][application][:database][:adapter] = OpsWorks::RailsConfiguration.determine_database_adapter(application, node[:deploy][application], "#{node[:deploy][application][:deploy_to]}/current", :force => node[:force_database_adapter_detection])
   deploy = node[:deploy][application]
 
@@ -19,36 +13,45 @@ node[:deploy].each do |application, deploy|
     include_recipe "opsworks_postgresql::client_install"
   end
 
-  template "#{deploy[:deploy_to]}/shared/config/database.yml" do
-    source "database.yml.erb"
-    cookbook 'rails'
-    mode "0660"
-    group deploy[:group]
-    owner deploy[:user]
-    variables(:database => deploy[:database], :environment => deploy[:rails_env])
+  log_dir = "#{deploy[:deploy_to]}/shared/log"
+  group_name = 'root'
 
-    notifies :run, "execute[restart Rails app #{application}]"
-
-    only_if do
-      deploy[:database][:host].present? && File.directory?("#{deploy[:deploy_to]}/shared/config/")
-    end
+  directory log_dir do
+    owner "#{deploy[:user]}"
+    group group_name
+    mode  '0666'
+    recursive true
   end
 
-  template "#{deploy[:deploy_to]}/shared/config/memcached.yml" do
-    source "memcached.yml.erb"
-    cookbook 'rails'
-    mode "0660"
-    group deploy[:group]
-    owner deploy[:user]
-    variables(
-      :memcached => deploy[:memcached] || {},
-      :environment => deploy[:rails_env]
-    )
-
-    notifies :run, "execute[restart Rails app #{application}]"
-
-    only_if do
-      deploy[:memcached][:host].present? && File.directory?("#{deploy[:deploy_to]}/shared/config/")
-    end
+  template "#{log_dir}/logstash_production.log" do
+      source "logstash_production.log.erb"
+      cookbook "beetrack_rails"
+      group 'root'
+      owner "#{deploy[:user]}"
+      mode   "0666"
   end
+  #creating file for bug of /root/.ruby-uuid not created
+  template "/tmp/ruby-uuid" do
+      source "logstash_production.log.erb"
+      cookbook "beetrack_rails"
+      group 'root'
+      owner "#{deploy[:user]}"
+      mode   "0666"
+  end
+
+  template "/tmp/.ruby-uuid" do
+      source "logstash_production.log.erb"
+      cookbook "beetrack_rails"
+      group 'root'
+      owner "#{deploy[:user]}"
+      mode   "0666"
+  end
+
+  execute "sudo chmod -R 776 #{deploy[:deploy_to]}/shared/log" do
+  end
+
+  execute "sudo chown -R #{deploy[:user]} #{deploy[:deploy_to]}/shared" do
+  end
+
+
 end
