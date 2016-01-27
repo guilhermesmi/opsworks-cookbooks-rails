@@ -1,7 +1,7 @@
 Filebeat Opsworks recipe
 ========================
 
-Chef cookbook to dynamically register and unregister an instance from ELB
+Chef cookbook to install and configure filebeat service to send logs to logstash remote server
 
 Recipes
 ------------------
