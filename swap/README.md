@@ -13,7 +13,7 @@ Databag
 Be sure to specify swap size in mb:
 ```json
 {
-  "swap_size": "8192
+  "swap_size": "8192"
 }
 ```
 
