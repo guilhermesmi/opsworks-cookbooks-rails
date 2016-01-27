@@ -5,7 +5,7 @@ node[:deploy].each do |application, deploy|
     source "mongoid.yml.erb"
     cookbook "rails"
     group 'root'
-    owner "#{node[:deploy][:user]}"
+    owner "#{deploy[:user]}"
     mode   "0755"
   end
 end
