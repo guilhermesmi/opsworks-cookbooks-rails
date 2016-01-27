@@ -1,17 +1,12 @@
-<% (['development', 'production'] + [@environment]).uniq.each do |env| -%>
-<%= env %>:
-  adapter: <%= @database[:adapter].to_s.inspect %>
-  database: <%= @database[:database].to_s.inspect %>
-  encoding: <%= (@database[:encoding] || 'utf8').to_s.inspect %>
-  host: <%= (@database[:host] || 'localhost').to_s.inspect %>
-  username: <%= @database[:username].to_s.inspect %>
-  password: <%= @database[:password].to_s.inspect %>
-  reconnect: <%= @database[:reconnect] ? 'true' : 'false' %>
-<% if @database[:pool] -%>
-  pool: <%= @database[:pool].to_i.inspect %>
-<% end -%>
-<% if @database[:port] -%>
-  port: <%= @database[:port].to_i.inspect %>
-<% end -%>
-
-<% end %>
+<%= node['rails_env'] %>:
+  adapter  : <%= node['database']['adapter'] || "mysql2" %>
+  host     : <%= node['database']['host'] %>
+  database : <%= node['database']['database'] %>
+  username : <%= node['database']['username'] %>
+  password : <%= node['database']['password'] %>
+  encoding : <%= node['database'].has_key?('encoding') ? node['database']['encoding'] : 'utf8' %>
+  reconnect: true
+  pool: 32
+  connect_timeout: 10
+  read_timeout: 15
+  write_timeout: 15
