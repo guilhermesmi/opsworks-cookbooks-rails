@@ -23,31 +23,19 @@ node[:deploy].each do |application, deploy|
     recursive true
   end
 
-  template "#{log_dir}/logstash_production.log" do
-      source "logstash_production.log.erb"
-      cookbook "beetrack_rails"
-      group 'root'
-      owner "#{deploy[:user]}"
-      mode   "0666"
-  end
   #creating file for bug of /root/.ruby-uuid not created
   template "/tmp/ruby-uuid" do
-      source "logstash_production.log.erb"
-      cookbook "beetrack_rails"
+      content ""
       group 'root'
       owner "#{deploy[:user]}"
       mode   "0666"
   end
 
   template "/tmp/.ruby-uuid" do
-      source "logstash_production.log.erb"
-      cookbook "beetrack_rails"
+      content ""
       group 'root'
       owner "#{deploy[:user]}"
       mode   "0666"
-  end
-
-  execute "sudo chmod -R 776 #{deploy[:deploy_to]}/shared/log" do
   end
 
   execute "sudo chown -R #{deploy[:user]} #{deploy[:deploy_to]}/shared" do
