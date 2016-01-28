@@ -42,7 +42,7 @@ node[:deploy].each do |application, deploy|
     group 'root'
     owner "#{deploy[:user]}"
     mode   "0666"
-    action :create_if_missing
+    action :create
   end
 
   execute "sudo chown -R #{deploy[:user]} #{deploy[:deploy_to]}" do
