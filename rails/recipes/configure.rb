@@ -1,18 +1,4 @@
 include_recipe "deploy"
-include_recipe "rbenv::default"
-include_recipe "rbenv::ruby_build"
-include_recipe "rbenv::rbenv_vars"
-
-ruby_v = "#{node[:opsworks][:ruby_version]}"
-if node[:ruby][:patch_version]
-  ruby_v = "#{ruby_v}.#{node[:ruby][:patch_version]}"
-end
-
-rbenv_ruby "#{ruby_v}"
-rbenv_gem "bundler" do
-  ruby_version "#{ruby_v}"
-end
-
 node[:deploy].each do |application, deploy|
   deploy = node[:deploy][application]
 

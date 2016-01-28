@@ -7,7 +7,6 @@ version     "1.0.0"
 depends "apache2"
 depends "deploy"
 depends "nginx"
-depends 'rbenv'
 
 recipe "rails::configure", "Re-configure a Rails application"
 
