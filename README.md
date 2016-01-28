@@ -9,11 +9,11 @@ Rails Recipes
 ------------------
 This recipes are based on Ruby on Rails app running with nginx and unicorn
 
-`rails::configure` install db client, set folder permissions
-`rails::mongoid_config` create mongoid.yml config file
-`rails::database_config` create database.yml config file
-`rails::deploy` clone app repository, bundle install and deploy app
-`rails::restart` restart unicorn
+* `rails::configure` install db client, set folder permissions
+* `rails::mongoid_config` create mongoid.yml config file
+* `rails::database_config` create database.yml config file
+* `rails::deploy` clone app repository, bundle install and deploy app
+* `rails::restart` restart unicorn
 
 Databag
 -------------------
