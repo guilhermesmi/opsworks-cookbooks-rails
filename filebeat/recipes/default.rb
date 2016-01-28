@@ -17,4 +17,16 @@ template "/etc/filebeat/filebeat.yml" do
     cert: node['filebeat']['cert']
   )
 end
+cert_content = nil
+cert_content = node['filebeat']['cert_content'].join('\n') if  !node['filebeat']['cert_content'].nil?
+
+if cert_content
+  file "#{node['filebeat']['cert']}" do
+    owner 'root'
+    group 'root'
+    content cert_content
+  end
+end
+
+
 execute 'sudo service filebeat restart'
