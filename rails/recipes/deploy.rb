@@ -36,6 +36,7 @@ node[:deploy].each do |application, deploy|
   execute "unicorn_#{application}" do
     cwd deploy[:current_path]
     command "#{deploy[:deploy_to]}/shared/scripts/unicorn start"
+    user "#{deploy[:user]}"
     action :run
   end
 
