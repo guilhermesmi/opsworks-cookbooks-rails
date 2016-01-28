@@ -50,6 +50,31 @@ For the mongoid config using `rails::mongoid_config` recipe you must specify thi
 }
 ```
 
+ELK (logstash, elasticsearch and kibana) Recipes
+------------------
+For the moment there are only recipes to configure filebeat to send logs to remote logstash server
+
+`filebeat::default` install and configure filebeat
+
+Databag
+-------------------
+Be sure to specify:
+```json
+{
+  "filebeat": {
+    "host": "[ip/domain:port]",
+    "path": "/mnt/srv/www/app/log/production.log",
+    "cert": "/etc/ssl/certs/filebeat.crt",
+    "cert_content": ["-----BEGIN CERTIFICATE-----",
+                      "MIIEczCCA1ugAwIBAgIBADANBgkqhkiG9w0BAQQFAD..AkGA1UEBhMCR0Ix",
+                      "BMAV7Gzdc4VspS6ljrAhbiiawdBiQlQmsBeFz9JkF4..b3l8BoGN+qMa56Y",
+                      "It8una2gY4l2O//on88r5IWJlm1L0oA8e4fR2yrBHX..adsGeFKkyNrwGi/",
+                      "7vQMfXdGsRrXNGRGnX+vWDZ3/zWI0joDtCkNnqEpVn..HoX",
+                      "-----END CERTIFICATE-----"]
+  }
+}
+```
+
 
 
 See also <https://aws.amazon.com/opsworks/>
