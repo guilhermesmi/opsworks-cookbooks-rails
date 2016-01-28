@@ -10,3 +10,10 @@ execute "aws-cli" do
   user "root"
   action :run
 end
+
+
+execute "aws-cli update" do
+  command "pip install --upgrade awscli"
+  user "root"
+  action :run
+end
