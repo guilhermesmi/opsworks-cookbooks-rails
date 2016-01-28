@@ -15,8 +15,7 @@ This recipes are based on Ruby on Rails app running with nginx and unicorn
 * `rails::deploy` clone app repository, bundle install and deploy app
 * `rails::restart` restart unicorn
 
-Databag
--------------------
+** Databag
 Be sure to specify deploy user and deploy path, I recommend use /mnt/srv/www due this [issue](https://github.com/aws/opsworks-cookbooks/issues/213):
 ```json
 {
@@ -54,10 +53,9 @@ ELK (logstash, elasticsearch and kibana) Recipes
 ------------------
 For the moment there are only recipes to configure filebeat to send logs to remote logstash server
 
-`filebeat::default` install and configure filebeat
+* `filebeat::default` install and configure filebeat
 
-Databag
--------------------
+** Databag
 Be sure to specify:
 ```json
 {
@@ -74,6 +72,39 @@ Be sure to specify:
   }
 }
 ```
+
+AWS CLI Recipes
+------------------
+For the moment there are recipes only for elb register/deregister and classiclink register/deregister
+
+* `awscli::default` install aws cli
+
+* `awscli::register_elb` register instance to elb
+
+* `awscli::deregister_elb` deregister instance to elb
+
+* `awscli::register_classiclink` register instance to classiclink VPN
+
+* `awscli::deregister_classiclink` deregister instance to classiclink VPN
+
+** Databag
+Be sure to specify aws credential and elb name in case of elb register or vpc and groups ids in case of ClassicLink register:
+```json
+{
+"aws": {
+     "AWS_ACCESS_KEY_ID": "AWS KEY ID",
+      "AWS_SECRET_ACCESS_KEY": "AWS ACCESS KEY",
+      "elb": {
+        "load_balancer_name": "LOAD BALANCER NAME"
+      },
+      "classic_link": {
+        "vpc_id": "VPC ID",
+         "groups": "SG-ID1 SG-ID2"
+      }
+    }
+}
+```
+
 
 
 
