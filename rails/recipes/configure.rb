@@ -38,13 +38,6 @@ node[:deploy].each do |application, deploy|
     action :create_if_missing
   end
 
-  directory "#{deploy[:deploy_to]}/current" do
-    group 'root'
-    owner "#{deploy[:user]}"
-    mode   "0666"
-    action :create
-  end
-
   execute "sudo chown -R #{deploy[:user]} #{deploy[:deploy_to]}" do
   end
 
