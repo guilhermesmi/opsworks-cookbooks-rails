@@ -16,6 +16,7 @@ This recipes are based on Ruby on Rails app running with nginx and unicorn
 * `rails::restart` restart unicorn
 
 **Databag**
+
 Be sure to specify deploy user and deploy path, I recommend use /mnt/srv/www due this [issue](https://github.com/aws/opsworks-cookbooks/issues/213):
 ```json
 {
@@ -56,6 +57,7 @@ For the moment there are only recipes to configure filebeat to send logs to remo
 * `filebeat::default` install and configure filebeat
 
 **Databag**
+
 Be sure to specify:
 ```json
 {
@@ -88,6 +90,7 @@ For the moment there are recipes only for elb register/deregister and classiclin
 * `awscli::deregister_classiclink` deregister instance to classiclink VPN
 
 **Databag**
+
 Be sure to specify aws credential and elb name in case of elb register or vpc and groups ids in case of ClassicLink register:
 ```json
 {
