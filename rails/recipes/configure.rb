@@ -40,6 +40,8 @@ node[:deploy].each do |application, deploy|
   execute "sudo chown -R #{deploy[:user]} #{deploy[:deploy_to]}" do
   end
 
+  execute "sudo chmod -R 776 #{deploy[:deploy_to]}" do
+
   execute "sudo /usr/local/bin/gem install bundler"
 
 
