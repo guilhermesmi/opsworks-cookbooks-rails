@@ -24,17 +24,8 @@ if cert_content
   file "#{node['filebeat']['cert']}" do
     owner 'root'
     group 'root'
-    content ""
+    content cert_content.join("\n")
   end
 end
-
-file = Chef::Util::FileEdit.new("#{node['filebeat']['cert']}")
-
-
-cert_content.each do |line|
-  file.insert_line_if_no_match(/#{line}/, line)
-end
-
-file.write_file
 
 execute 'sudo service filebeat restart'
