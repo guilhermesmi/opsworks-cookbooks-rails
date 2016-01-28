@@ -1,0 +1,3 @@
+[submodule "rbenv-cookbook"]
+	path = rbenv-cookbook
+	url = https://github.com/RiotGamesCookbooks/rbenv-cookbook.git
