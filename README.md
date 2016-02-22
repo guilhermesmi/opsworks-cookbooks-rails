@@ -27,7 +27,7 @@ Be sure to specify deploy user and deploy path, I recommend use /mnt/srv/www due
 }
 ```
 
-For the database config using `rails::database_config` recipe you must specify this data
+For the database config using `rails::mysql_config` recipe you must specify this data
 ```json
 {
   "rails_env": "production",
