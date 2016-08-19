@@ -1,6 +1,4 @@
-source 'https://supermarket.getchef.com'
-
-metadata
+source "https://supermarket.chef.io"
 
 cookbook 'chef-solo-search'
 cookbook 'apt'
